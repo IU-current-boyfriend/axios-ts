@@ -1,0 +1,22 @@
+{
+  "name": "axios",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "webpack serve"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "html-webpack-plugin": "^5.5.4",
+    "ts-loader": "9.4.1",
+    "typescript": "^5.3.3",
+    "webpack-dev-server": "^4.15.1"
+  }
+}
