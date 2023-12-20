@@ -60,6 +60,14 @@ class HYRequest {
       return res.data;
     }, (err) => {
       console.log('全局的响应失败的拦截器', err);
+
+      // 帆哥说的问题：
+      // => 原因
+      // 请求失败，虽然走的是这里，但是并没有告知异常被捕获，单个拦截器执行的时候
+      // 感知不到全局请求的结果状态，所以request请求默认走的是成功状态，并未执行失败状态，
+      // 所以要抛出异常。 全局拦截器 => 单个接口拦截器
+      // return err;
+      return Promise.reject(err);
     })
 
     // 设置单个拦截器生效
@@ -91,22 +99,24 @@ class HYRequest {
     // res的类型由promise实例对象的泛型决定
     return new Promise<T>((resolve, reject) => {
       this._instance.request<any, T>(config).then((res) => {
-        if (config?.interceptors?.responseOnFufilledCeptor) {
-          // 手动拦截响应请求
-          res = config.interceptors.responseOnFufilledCeptor(res);
-        }
-        resolve(res);
+          if (config?.interceptors?.responseOnFufilledCeptor) {
+            // 手动拦截响应请求
+            res = config.interceptors.responseOnFufilledCeptor(res);
+          }
+          resolve(res);
       }).catch(err => {
         reject(err);
       })
     });
   }
 
-  get() {
-
+  get<T = any>(config: IAxiosRequestConfig<T>) {
+    return this.request({ ...config, method: 'GET' });
   }
 
-  post() { }
+  post<T = any>(config: IAxiosRequestConfig<T>) {
+    return this.request({ ...config, method: 'POST' });
+   }
 }
 
 export default HYRequest;

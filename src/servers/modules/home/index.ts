@@ -23,7 +23,7 @@ interface IDetailData {
 
 
 hyRequestHome.request<IDetailData>({
-  url: '/post_demo',
+  url: '/post_demo2',
   method: 'POST',
   // 这个地方想要有拦截器，能够拦截请求
   interceptors: {
@@ -44,4 +44,6 @@ hyRequestHome.request<IDetailData>({
   },
 }).then((res) => {
   console.log('home2:=>', res.error_code, res.error_msg, res.data);
-})
+}).catch(err => {
+  console.log('error: =>', err);
+}) 
