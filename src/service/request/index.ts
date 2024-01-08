@@ -11,7 +11,6 @@ import type { IAxiosRequestConfig } from "./type";
 
 const ENV_PRODUCTION = "production";
 const GET_METHOD = "GET";
-
 export default class CURequest {
   // axios实例对象
   private _instance: AxiosInstance;
@@ -102,5 +101,13 @@ export default class CURequest {
       this._instance.defaults.baseURL = isMock ? this._requestConfig.mockURL : this._requestConfig.baseURL;
     }
     return config;
+  }
+
+  get<T>(config: IAxiosRequestConfig<T>) {
+    this.request<T>({ ...config, method: 'get' });
+  }
+
+  post<T>(config: IAxiosRequestConfig<T>) {
+    this.request<T>({ ...config, method: 'post' });
   }
 }
